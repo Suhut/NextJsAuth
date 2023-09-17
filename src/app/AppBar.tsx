@@ -14,15 +14,17 @@ const AppBar = () => {
 
       <Link className="text-sky-600 hover:text-sky-700" href={"/about"}>
         About
-      </Link>
-      <Link className="text-sky-600 hover:text-sky-700" href={"/admin"}>
-        Admin
+      </Link> 
+      <Link className="text-sky-600 hover:text-sky-700" href={"/weather"}>
+        Weather
       </Link>
       <div className="ml-auto flex gap-2">
         {session?.user ? (
           <>
             <p className="text-sky-600"> {session.user.name}</p>
-            <button className="text-red-500" onClick={() => signOut()}>
+            <button className="text-red-500" onClick={() => {
+                signOut();
+            } }>
               Sign Out
             </button>
           </>

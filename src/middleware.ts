@@ -5,4 +5,4 @@ const mainMiddleware: NextMiddleware = (request) => {
   //other middleware operations
   return res;
 };
-export default withAuthorization(mainMiddleware, ["/admin"]);
+export default withAuthorization(mainMiddleware, ["/weather"]);

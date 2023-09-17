@@ -5,64 +5,51 @@ import OpeniddictIdentityServer from "./openiddict_provider";
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
-  },
+  }, 
   secret:"123",
   providers: [
-    CredentialsProvider({
-      id:"SignIn",
-      type:"credentials",
-      name: "Credentials", 
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email", 
-        },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) { 
-        // console.log(credentials);
-        const {email, password} = credentials as {
-          email: string,
-          password: string,
-        };
-        const user = { id : "1", name : "admin", email: email };
-        return user;
-      },
-    }),
+    // CredentialsProvider({
+    //   id:"SignIn",
+    //   type:"credentials",
+    //   name: "Credentials", 
+    //   credentials: {
+    //     email: {
+    //       label: "Email",
+    //       type: "email", 
+    //     },
+    //     password: { label: "Password", type: "password" }
+    //   },
+    //   async authorize(credentials) { 
+    //     // console.log(credentials);
+    //     const {email, password} = credentials as {
+    //       email: string,
+    //       password: string,
+    //     };
+    //     const user = { id : "1", name : "admin", email: email };
+    //     return user;
+    //   },
+    // }),
     OpeniddictIdentityServer({
       id: 'openiddict',
       name: 'Openiddict',
       clientId: "NextJsClient",
       clientSecret: "NextJs-Secret",
       issuer: "http://localhost:7211",
-      authorization: { params: { scope: 'openid profile' } },
+      authorization: { params: { scope: 'openid email profile apibff' } },
       idToken: true,
     })
-  ],
+  ], 
 
   callbacks: {
-    jwt({token, account, profile, user}) {
-      if(account?.provider==="SignIn") {
-        token.email=user.email;
+    async jwt({token, account, profile, user}) { 
+      if (account) {
+        token.access_token = account.access_token;
       }
-      if(account?.provider==="NextJsClient") {
-        
-        // if (account) {
-        //   token.access_token = account.access_token;
-        // }
-      }
-      console.log("TOKEN :");
-      console.log(token);
-
-      return token;
+      return token; 
     }, 
-    async session ({session, token}:any)  {
-      if("email" in token) {
-        session.user.email = token.email;
-      } 
-      console.log("SESSION :");
-       console.log(session);
-      return session;
+    async session ({session, token, user}:any)  {  
+        session.user = { name:token.name, email:'', image:'', accessToken: token?.access_token }; 
+        return session; 
     }
   }
 };

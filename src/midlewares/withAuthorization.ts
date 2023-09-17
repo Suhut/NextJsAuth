@@ -14,9 +14,10 @@ export default function withAuthorization(
     const pathname = request.nextUrl.pathname;
     if (requireAuth.some((path) => pathname.startsWith(path))) {
       const token = await getToken({
-        req: request,
-        secret: "123",
+        req: request, 
+        secret: "123"
       });
+      // console.log(token);
       if (!token) {
         const url = new URL(`/api/auth/signin`, request.url);
         url.searchParams.set("callbackUrl ", encodeURI(request.url));
