@@ -11,13 +11,13 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       id:"SignIn",
       type:"credentials",
-      name: "SignIn",
+      name: "Credentials", 
       credentials: {
         email: {
           label: "Email",
           type: "email", 
         },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) { 
         // console.log(credentials);
@@ -31,6 +31,7 @@ export const authOptions: NextAuthOptions = {
     }),
     OpeniddictIdentityServer({
       id: 'openiddict',
+      name: 'Openiddict',
       clientId: "NextJsClient",
       clientSecret: "NextJs-Secret",
       issuer: "http://localhost:7211",
