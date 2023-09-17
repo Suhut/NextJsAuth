@@ -1,5 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import OpeniddictIdentityServer from "./openiddict_provider";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -8,6 +9,7 @@ export const authOptions: NextAuthOptions = {
   secret:"123",
   providers: [
     CredentialsProvider({
+      id:"SignIn",
       type:"credentials",
       name: "SignIn",
       credentials: {
@@ -27,6 +29,14 @@ export const authOptions: NextAuthOptions = {
         return user;
       },
     }),
+    OpeniddictIdentityServer({
+      id: 'openiddict',
+      clientId: "NextJsClient",
+      clientSecret: "NextJs-Secret",
+      issuer: "http://localhost:7211",
+      authorization: { params: { scope: 'openid profile' } },
+      idToken: true,
+    })
   ],
 
   callbacks: {
@@ -34,14 +44,23 @@ export const authOptions: NextAuthOptions = {
       if(account?.provider==="SignIn") {
         token.email=user.email;
       }
-      // console.log(token);
+      if(account?.provider==="NextJsClient") {
+        
+        // if (account) {
+        //   token.access_token = account.access_token;
+        // }
+      }
+      console.log("TOKEN :");
+      console.log(token);
+
       return token;
     }, 
     async session ({session, token}:any)  {
       if("email" in token) {
         session.user.email = token.email;
       } 
-      // console.log(session);
+      console.log("SESSION :");
+       console.log(session);
       return session;
     }
   }
