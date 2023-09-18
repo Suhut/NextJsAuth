@@ -6,7 +6,7 @@ export default function Layout({
 }) {
   return (
       <>
-        <h1>ABOUT LAYOUT</h1>
+        {/* <h1>ABOUT LAYOUT</h1> */}
         {children}
       </>
   )

@@ -6,3 +6,4 @@ const mainMiddleware: NextMiddleware = (request) => {
   return res;
 };
 export default withAuthorization(mainMiddleware, ["/weather"]);
+// export default withAuthorization(mainMiddleware, []);

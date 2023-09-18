@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
       <SessionProvider>
           <AppBar /> 
-          <h1>HOME LAYOUT</h1>
+          {/* <h1>HOME LAYOUT</h1> */}
           <div>
           {children}
           </div>

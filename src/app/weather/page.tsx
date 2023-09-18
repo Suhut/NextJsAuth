@@ -22,11 +22,20 @@ export default function() {
         SetJson(JSON.stringify(response.data) );
       });
     }
-  },[]);
-    return (
-        <>
-            <h1>JSON</h1>
+  },[session?.user?.accessToken]); 
+    return ( 
+        <><h1>
+          WEATHER PAGE
+          </h1> 
+          {session?.user?.accessToken ?
+          (<>
+            <h1>JSON</h1> 
             <div>{json}</div>  
+          </>):(
+            <>
+            <h1>don't have permission</h1>    
+          </>
+          )}
         </>
     );
 }
