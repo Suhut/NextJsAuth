@@ -13,7 +13,7 @@ export default function() {
   useEffect(() => {  
     console.log(session);
     if(session?.user?.accessToken) { 
-      axios.get('http://localhost:7105/WeatherForecast', {
+      axios.get('http://192.168.8.109:7105/WeatherForecast', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${session?.user.accessToken}` 

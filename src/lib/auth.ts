@@ -6,6 +6,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   }, 
+  
   secret:"123",
   providers: [
     // CredentialsProvider({
@@ -28,15 +29,16 @@ export const authOptions: NextAuthOptions = {
     //     const user = { id : "1", name : "admin", email: email };
     //     return user;
     //   },
-    // }),
+    // }), 
     OpeniddictIdentityServer({
       id: 'openiddict',
       name: 'Openiddict',
       clientId: "NextJsClient",
       clientSecret: "NextJs-Secret",
-      issuer: "http://localhost:7211",
+      issuer: "http://192.168.8.109:7211", 
       authorization: { params: { scope: 'openid email profile apibff' } },
-      idToken: true,
+      idToken: true, 
+       
     })
   ], 
 
@@ -45,11 +47,12 @@ export const authOptions: NextAuthOptions = {
       if (account) {
         token.access_token = account.access_token;
       }
+      console.log(token);
       return token; 
     }, 
     async session ({session, token, user}:any)  {  
         session.user = { name:token.name, email:'', image:'', accessToken: token?.access_token }; 
         return session; 
-    }
-  }
+    } 
+  },
 };

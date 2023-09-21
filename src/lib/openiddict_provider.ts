@@ -17,7 +17,7 @@ export default function OpeniddictIdentityServer<P extends OpeniddictISUser>(
     wellKnown: `${options.issuer}/.well-known/openid-configuration`,
     authorization: { params: { scope: "openid profile email apibff" } },
     checks: ["pkce", "state"],
-    idToken: true,
+    idToken: true, 
     profile(profile) {
       return {
         id: profile.sub,
@@ -26,5 +26,6 @@ export default function OpeniddictIdentityServer<P extends OpeniddictISUser>(
       }
     },
     options,
+    
   }
 }
